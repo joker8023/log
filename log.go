@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 	"time"
-	"viinet-log/wecom"
 
 	"github.com/dfang/wechat-work-go/message"
+	"github.com/joker8023/log/wecom"
 )
 
 const (
