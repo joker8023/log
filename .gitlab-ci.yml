@@ -1,0 +1,25 @@
+image: docker:latest
+
+services:
+  - docker:19.03.5-dind
+
+before_script:
+  - docker login -u $docker_user -p $docker_password $docker_registry
+  - export PROJECT_NAME=`echo $CI_PROJECT_NAME | tr 'A-Z' 'a-z'`
+  - export IMAGE_ADDRESS=$docker_registry/viinet/$PROJECT_NAME
+
+build-master:
+  stage: build
+  script:
+    - docker build --pull -t $IMAGE_ADDRESS .
+    - docker push $IMAGE_ADDRESS
+  only:
+    - master
+
+build:
+  stage: build
+  script:
+    - docker build --pull -t $IMAGE_ADDRESS:dev .
+    - docker push $IMAGE_ADDRESS:dev
+  only:
+    - dev
